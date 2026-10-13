@@ -9,13 +9,14 @@ El presente documento describe cómo se construye TQP App para cumplir los requi
 | Campo | Valor |
 | --- | --- |
 | Producto | TQP App |
-| Versión | 0.1 |
+| Versión | 0.2 |
 | Estado | Borrador para revisión del responsable del producto |
 | Norma de estructura | ISO/IEC/IEEE 42010:2022, descripción de arquitectura |
 | Documento base | Especificación de Requisitos de Software de TQP App, versión 1.5 |
 
 | Versión | Fecha | Cambio |
 | --- | --- | --- |
+| 0.2 | 2026-10-09 | La Plataforma reside en `apps/api/src/core/` y los 17 módulos restantes en `apps/api/src/modules/`; eslint-plugin-import-x sustituye a eslint-plugin-boundaries por las vulnerabilidades de sus dependencias; nuevas dependencias de calidad de código |
 | 0.1 | 2026-10-08 | Borrador inicial |
 
 ## 1. Introducción
@@ -129,7 +130,7 @@ Un módulo solo puede utilizar otro a través de su `index.ts`. Esta regla se ve
 
 ### 5.3 Módulos
 
-Los 18 módulos corresponden a los de la sección 7.1 del SRS: Plataforma, Cuentas, Catálogos, Proyectos, Contenido, Ficha técnica, Archivos, Diagramas, Bitácora, Metodología, Funcionalidades, Documentación, Estándares, Búsqueda, Inicio, Compartición, Plantillas y Bienvenida. En el código se nombran en inglés: `platform`, `accounts`, `catalogs`, `projects`, `content`, `tech-sheet`, `files`, `diagrams`, `logbook`, `methodology`, `backlog`, `documentation`, `standards`, `search`, `home`, `sharing`, `templates` y `onboarding`. El módulo Funcionalidades se denomina `backlog` para no confundirlo con el directorio `features` del frontend.
+Los 18 módulos corresponden a los de la sección 7.1 del SRS: Plataforma, Cuentas, Catálogos, Proyectos, Contenido, Ficha técnica, Archivos, Diagramas, Bitácora, Metodología, Funcionalidades, Documentación, Estándares, Búsqueda, Inicio, Compartición, Plantillas y Bienvenida. En el código, la Plataforma reside en `apps/api/src/core/` y no depende de ningún módulo; los 17 módulos restantes residen en `apps/api/src/modules/` y se nombran en inglés: `accounts`, `catalogs`, `projects`, `content`, `tech-sheet`, `files`, `diagrams`, `logbook`, `methodology`, `backlog`, `documentation`, `standards`, `search`, `home`, `sharing`, `templates` y `onboarding`. El módulo Funcionalidades se denomina `backlog` para no confundirlo con el directorio `features` del frontend.
 
 ### 5.4 Frontend
 
@@ -381,7 +382,12 @@ Todas las dependencias usan licencias permisivas compatibles con software propie
 | Accesibilidad | axe-core; Lighthouse CI | MPL-2.0; Apache-2.0 |
 | Rendimiento | autocannon, size-limit | MIT |
 | Seguridad | gitleaks; OWASP ZAP; license-checker | MIT; Apache-2.0; BSD-3-Clause |
-| Calidad de código | ESLint, Prettier | MIT |
+| Calidad de código | ESLint, @eslint/js, typescript-eslint, eslint-plugin-import-x, globals, Prettier | MIT |
+| Resolución de imports de TypeScript en ESLint | eslint-import-resolver-typescript | ISC |
+| Revisión antes de cada commit | simple-git-hooks, lint-staged | MIT |
+| Compilador | TypeScript 6.0, fijo en esa versión mayor hasta que typescript-eslint admita TypeScript 7 | Apache-2.0 |
+
+La regla de fronteras entre módulos usa `no-restricted-paths` de eslint-plugin-import-x, con zonas generadas a partir de los directorios de `apps/api/src/modules/`.
 
 ### 13.4 Servicios en contenedor
 
@@ -393,7 +399,7 @@ Todas las dependencias usan licencias permisivas compatibles con software propie
 | SeaweedFS | Almacenamiento local compatible con S3, aprobado en ADR-007 en sustitución de MinIO | Apache-2.0 |
 | Mailpit | Captura de correos en local | MIT |
 
-Descartadas por licencia o mantenimiento: Shepherd.js e Intro.js por licencia AGPL; k6 por licencia AGPL; MinIO por licencia AGPL y porque su repositorio fue archivado el 25 de abril de 2026.
+Descartadas por licencia o mantenimiento: Shepherd.js e Intro.js por licencia AGPL; k6 por licencia AGPL; MinIO por licencia AGPL y porque su repositorio fue archivado el 25 de abril de 2026; eslint-plugin-boundaries porque su versión 7.2.0 depende de versiones de handlebars y braces con vulnerabilidades crítica y alta.
 
 ## 14. Proveedores y presupuesto
 

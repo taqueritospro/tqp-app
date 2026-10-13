@@ -1,0 +1,10 @@
+# Source documents are edited by hand and must never be reformatted
+docs/
+LICENSE
+CLAUDE.md
+
+# Generated files
+package-lock.json
+dist/
+coverage/
+*.tsbuildinfo
