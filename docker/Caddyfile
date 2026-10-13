@@ -1,0 +1,12 @@
+{
+	local_certs
+	skip_install_trust
+}
+
+tqp-app.localhost {
+	reverse_proxy web:8080
+}
+
+api.tqp-app.localhost {
+	reverse_proxy api:{$API_PORT}
+}
