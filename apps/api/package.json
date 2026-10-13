@@ -4,9 +4,17 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "node ../../tooling/dev-runner.mjs src/server.ts src ../../packages/shared/src",
+    "build": "tsc -b",
+    "start": "node dist/server.js",
     "typecheck": "tsc -b"
   },
   "dependencies": {
-    "@tqp-app/shared": "*"
+    "@tqp-app/shared": "*",
+    "express": "5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "24.19.0"
   }
 }

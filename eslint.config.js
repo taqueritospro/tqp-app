@@ -8,7 +8,7 @@ import { moduleBoundaries } from './tooling/module-boundaries.js';
 const API_SRC_DIR = path.join(import.meta.dirname, 'apps/api/src');
 
 export default defineConfig(
-  globalIgnores(['**/dist/', '**/coverage/', 'tooling/fixtures/']),
+  globalIgnores(['**/dist/', '**/build/', '**/coverage/', 'tooling/fixtures/']),
   js.configs.recommended,
   tseslint.configs.strictTypeChecked,
   {
