@@ -3,6 +3,7 @@ node_modules/
 
 # Build output
 dist/
+build/
 *.tsbuildinfo
 
 # Test output
@@ -12,6 +13,9 @@ coverage/
 .env
 .env.*
 !.env.example
+
+# Local Docker artifacts, such as the exported Caddy root certificate
+docker/.local/
 
 # OS and editor files
 .DS_Store

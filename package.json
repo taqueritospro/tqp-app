@@ -15,6 +15,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
+    "env:dev": "node docker/scripts/env.mjs dev",
+    "env:cloud": "node docker/scripts/env.mjs cloud",
+    "env:down": "node docker/scripts/env.mjs down",
+    "env:logs": "node docker/scripts/env.mjs logs",
+    "env:ca": "node docker/scripts/env.mjs ca",
+    "env:verify": "node docker/scripts/env.mjs verify",
     "prepare": "simple-git-hooks"
   },
   "simple-git-hooks": {

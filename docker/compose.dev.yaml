@@ -1,0 +1,30 @@
+# Development mode: source code is bind-mounted and reloads without restarting containers.
+# node_modules stay inside anonymous volumes so host and container installs never mix.
+x-source-volumes: &source-volumes
+  - ..:/app
+  - /app/node_modules
+  - /app/apps/api/node_modules
+  - /app/apps/web/node_modules
+  - /app/packages/shared/node_modules
+
+services:
+  web:
+    build:
+      target: dev
+    environment:
+      VITE_API_BASE_URL: ${VITE_API_BASE_URL}
+    volumes: *source-volumes
+
+  api:
+    build:
+      target: dev
+    volumes: *source-volumes
+
+  postgres:
+    ports:
+      # Only for DBeaver on this computer.
+      - '127.0.0.1:${DB_HOST_PORT:-5433}:5432'
+    networks: [data, db-admin]
+
+networks:
+  db-admin: {}
