@@ -9,13 +9,14 @@ El presente documento describe cómo se construye TQP App para cumplir los requi
 | Campo | Valor |
 | --- | --- |
 | Producto | TQP App |
-| Versión | 0.2 |
+| Versión | 0.3 |
 | Estado | Borrador para revisión del responsable del producto |
 | Norma de estructura | ISO/IEC/IEEE 42010:2022, descripción de arquitectura |
 | Documento base | Especificación de Requisitos de Software de TQP App, versión 1.5 |
 
 | Versión | Fecha | Cambio |
 | --- | --- | --- |
+| 0.3 | 2026-10-13 | La recarga de la API en desarrollo usa `tooling/dev-runner.mjs`; nodemon se descarta por la vulnerabilidad GHSA-vfj7-8cjw-p6xm de su dependencia braces |
 | 0.2 | 2026-10-09 | La Plataforma reside en `apps/api/src/core/` y los 17 módulos restantes en `apps/api/src/modules/`; eslint-plugin-import-x sustituye a eslint-plugin-boundaries por las vulnerabilidades de sus dependencias; nuevas dependencias de calidad de código |
 | 0.1 | 2026-10-08 | Borrador inicial |
 
@@ -388,6 +389,8 @@ Todas las dependencias usan licencias permisivas compatibles con software propie
 | Compilador | TypeScript 6.0, fijo en esa versión mayor hasta que typescript-eslint admita TypeScript 7 | Apache-2.0 |
 
 La regla de fronteras entre módulos usa `no-restricted-paths` de eslint-plugin-import-x, con zonas generadas a partir de los directorios de `apps/api/src/modules/`.
+
+La recarga de la API en modo desarrollo usa `tooling/dev-runner.mjs`, un lanzador propio sin dependencias que vigila directorios en lugar de archivos, para detectar también los guardados que reemplazan el archivo y los cambios de `git switch`; no forma parte de la imagen de producción. Se descartaron `node --watch`, que deja de detectar un archivo después de que se reemplaza, y nodemon, porque su versión 3.1.14 depende de chokidar 3 y braces, con la vulnerabilidad alta GHSA-vfj7-8cjw-p6xm sin versión corregida.
 
 ### 13.4 Servicios en contenedor
 
